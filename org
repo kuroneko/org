@@ -40,6 +40,10 @@ def main_entry(cmd, *args)
 end
 
 if __FILE__ == $0
+  if ARGV.length == 0
+    $stderr.puts usage
+    exit 1
+  end
   exit main_entry(*ARGV)
 end
 
