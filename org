@@ -1,0 +1,45 @@
+#!/usr/bin/ruby
+require File.dirname(__FILE__) + '/org-lib/commands'
+require 'yaml'
+
+def usage
+  <<EOT
+
+usage: org <command> args...
+
+Commands:
+
+  import start_number filename filename filename...
+    Imports multiple files into a series, numbered starting with the start number provided.
+
+  check
+    Checks files in the current directory.
+
+EOT
+end
+
+def main_entry(cmd, *args)
+  case cmd
+    when 'import'
+      cmd_class = ImportCommand
+    when 'check'
+      cmd_class = CheckCommand
+    else
+      $stderr.puts usage
+      exit 1
+  end
+
+  command = cmd_class.new
+  #command.config = YAML.load_file('0org')
+  begin
+    command.run(*args)
+  rescue ArgumentError
+    $stderr.puts command.usage
+    1
+  end
+end
+
+if __FILE__ == $0
+  exit main_entry(*ARGV)
+end
+
