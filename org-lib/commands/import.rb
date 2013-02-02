@@ -25,7 +25,7 @@ Usage: org import [-nN] files...
   directory, and performs an SHA-1 hash on the file.
 
     N - the first episode number.  The first file will receive this number; subsequent files
-        will be assumed to be in order on the command-line.  For sanity's sake this command
+        will be assumed to be in order on the command-line.  For the sake of sanity this command
         also checks that the number is in the file before doing any work.
 
         If this parameter is omitted, the numbering will start from the first file which does
