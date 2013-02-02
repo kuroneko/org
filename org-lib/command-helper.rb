@@ -59,7 +59,7 @@ module CommandHelper
       extension = ''
     end
 
-    "#{basename} - #{num_str}#{extension}"
+    "#{basename} - ep#{num_str}#{extension}"
   end
 
   ## Generates the filename for the digest file.
