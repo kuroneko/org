@@ -2,7 +2,14 @@ require 'digest/sha1'
 
 ## Helper mixin for command classes to use.
 module CommandHelper
-
+  ##
+  # Returns the prefix to use when designating an episode number in the filename.
+  #
+  # Some people prefer blanks, others prefer 'ep' to meet the requirements of XBMC.
+  def ep_prefix
+    "ep"
+  end
+  
   ##
   # Base name for generated filenames, derived from directory name.
   # By convention I chop off anything in round brackets at the end as I use this
@@ -38,8 +45,8 @@ module CommandHelper
   # Iterates over episode filenames.
   #
   def each_episode_file
-    episode_filename_regex ||= Regexp.compile("^#{Regexp.escape(basename)} - (\\d+)\\.[^.]+$")
-    exclude_episode_filename_regex ||= Regexp.compile("^#{Regexp.escape(basename)} - (\\d+)\\.(ass|ssa|sub)$")
+    episode_filename_regex ||= Regexp.compile("^#{Regexp.escape(basename)} - #{Regexp.escape(ep_prefix)}(\\d+)\\.[^.]+$")
+    exclude_episode_filename_regex ||= Regexp.compile("^#{Regexp.escape(basename)} - #{Regexp.escape(ep_prefix)}(\\d+)\\.(ass|ssa|sub)$")
     Dir.entries('.').sort.each do |file|
       if file =~ episode_filename_regex
         episode_number = $1
@@ -59,7 +66,7 @@ module CommandHelper
       extension = ''
     end
 
-    "#{basename} - ep#{num_str}#{extension}"
+    "#{basename} - #{ep_prefix}#{num_str}#{extension}"
   end
 
   ## Generates the filename for the digest file.
